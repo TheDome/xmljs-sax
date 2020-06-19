@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`XMLParser should read a complicated XML 1`] = `
+XmlNode {
+  "attributes": Array [
+    Object {
+      "local": "encodingStyle",
+      "name": "soap:encodingStyle",
+      "prefix": "soap",
+      "uri": "http://www.w3.org/2001/12/soap-envelope",
+      "value": "http://www.w3.org/2001/12/soap-encoding",
+    },
+  ],
+  "childs": Array [
+    XmlNode {
+      "attributes": Array [],
+      "childs": Array [
+        XmlNode {
+          "attributes": Array [],
+          "childs": Array [
+            XmlNode {
+              "attributes": Array [],
+              "childs": Array [
+                XmlNode {
+                  "attributes": Array [],
+                  "childs": Array [
+                    XmlNode {
+                      "attributes": Array [],
+                      "childs": Array [
+                        XmlNode {
+                          "attributes": Array [],
+                          "childs": Array [],
+                          "fullName": "m:priCe",
+                          "name": "priCe",
+                          "namespace": Object {
+                            "m": "http://www.example.org/stock",
+                          },
+                          "value": "36.5",
+                        },
+                      ],
+                      "fullName": "m:Price",
+                      "name": "Price",
+                      "namespace": Object {
+                        "m": "http://www.example.org/stock",
+                      },
+                      "value": "35.5",
+                    },
+                  ],
+                  "fullName": "m:GetStockPriceResponse",
+                  "name": "GetStockPriceResponse",
+                  "namespace": Object {
+                    "m": "http://www.example.org/stock",
+                  },
+                },
+              ],
+              "fullName": "m:Price",
+              "name": "Price",
+              "namespace": Object {
+                "m": "http://www.example.org/stock",
+              },
+              "value": "34.5",
+            },
+          ],
+          "fullName": "m:GetStockPriceResponse",
+          "name": "GetStockPriceResponse",
+          "namespace": Object {
+            "m": "http://www.example.org/stock",
+          },
+        },
+      ],
+      "fullName": "soap:Body",
+      "name": "Body",
+      "namespace": Object {
+        "m": "http://www.example.org/stock",
+      },
+    },
+  ],
+  "fullName": "soap:Envelope",
+  "name": "Envelope",
+  "namespace": Object {
+    "soap": "http://www.w3.org/2001/12/soap-envelope",
+  },
+}
+`;
+
+exports[`XMLParser should read a simple XML 1`] = `
+XmlNode {
+  "attributes": Array [
+    Object {
+      "local": "encodingStyle",
+      "name": "soap:encodingStyle",
+      "prefix": "soap",
+      "uri": "http://www.w3.org/2001/12/soap-envelope",
+      "value": "http://www.w3.org/2001/12/soap-encoding",
+    },
+  ],
+  "childs": Array [
+    XmlNode {
+      "attributes": Array [],
+      "childs": Array [
+        XmlNode {
+          "attributes": Array [],
+          "childs": Array [
+            XmlNode {
+              "attributes": Array [
+                Object {
+                  "local": "includedVat",
+                  "name": "includedVat",
+                  "prefix": "",
+                  "uri": "",
+                  "value": "1.21",
+                },
+              ],
+              "childs": Array [],
+              "fullName": "m:Price",
+              "name": "Price",
+              "namespace": Object {
+                "m": "http://www.example.org/stock",
+              },
+              "value": "34.5",
+            },
+          ],
+          "fullName": "m:GetStockPriceResponse",
+          "name": "GetStockPriceResponse",
+          "namespace": Object {
+            "m": "http://www.example.org/stock",
+          },
+        },
+      ],
+      "fullName": "soap:Body",
+      "name": "Body",
+      "namespace": Object {
+        "m": "http://www.example.org/stock",
+      },
+    },
+  ],
+  "fullName": "soap:Envelope",
+  "name": "Envelope",
+  "namespace": Object {
+    "soap": "http://www.w3.org/2001/12/soap-envelope",
+  },
+}
+`;
