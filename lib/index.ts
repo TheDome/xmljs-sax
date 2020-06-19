@@ -2,6 +2,11 @@ import { parser as saxParser, QualifiedAttribute } from "sax";
 import Debug from "debug";
 import XmlNode from "./XmlNode";
 
+/**
+ * Parse an xml string.
+ * @param xml
+ * @param strict
+ */
 export default function parse(xml: string, strict = true): Promise<XmlNode> {
   const debug = Debug("xml:parser");
 
