@@ -185,7 +185,9 @@ class XmlNode {
 
     if (
       ns[thisNameSpace] !== this.namespace[this.fullName.split(":")[0]] ||
-      this.name !== thisLocalName
+      (ignoreCase
+        ? this.name.toLocaleLowerCase() !== thisLocalName.toLocaleLowerCase()
+        : this.name !== thisLocalName)
     ) {
       if (nextChild.length === 0) {
         // This is the searched one!

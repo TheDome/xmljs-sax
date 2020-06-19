@@ -59,7 +59,7 @@ describe("Resolver", function () {
     const root = await parse(xml);
 
     const priceNode = root.resolveNSPath(
-      "A:Envelope/A:Body/B:GetStockPriceResponse/B:Price",
+      "A:envelope/A:body/B:getstockPriceResponsE/B:price",
       {
         A: "http://www.w3.org/2001/12/soap-envelope",
         B: "http://www.example.org/stock",
