@@ -35,6 +35,7 @@ XmlNode {
                           "namespace": Object {
                             "m": "http://www.example.org/stock",
                           },
+                          "parent": [Circular],
                           "value": "36.5",
                         },
                       ],
@@ -43,6 +44,7 @@ XmlNode {
                       "namespace": Object {
                         "m": "http://www.example.org/stock",
                       },
+                      "parent": [Circular],
                       "value": "35.5",
                     },
                   ],
@@ -51,6 +53,7 @@ XmlNode {
                   "namespace": Object {
                     "m": "http://www.example.org/stock",
                   },
+                  "parent": [Circular],
                 },
               ],
               "fullName": "m:Price",
@@ -58,6 +61,7 @@ XmlNode {
               "namespace": Object {
                 "m": "http://www.example.org/stock",
               },
+              "parent": [Circular],
               "value": "34.5",
             },
           ],
@@ -66,6 +70,7 @@ XmlNode {
           "namespace": Object {
             "m": "http://www.example.org/stock",
           },
+          "parent": [Circular],
         },
       ],
       "fullName": "soap:Body",
@@ -73,6 +78,7 @@ XmlNode {
       "namespace": Object {
         "m": "http://www.example.org/stock",
       },
+      "parent": [Circular],
     },
   ],
   "fullName": "soap:Envelope",
@@ -80,6 +86,7 @@ XmlNode {
   "namespace": Object {
     "soap": "http://www.w3.org/2001/12/soap-envelope",
   },
+  "parent": null,
 }
 `;
 
@@ -117,6 +124,7 @@ XmlNode {
               "namespace": Object {
                 "m": "http://www.example.org/stock",
               },
+              "parent": [Circular],
               "value": "34.5",
             },
           ],
@@ -125,6 +133,7 @@ XmlNode {
           "namespace": Object {
             "m": "http://www.example.org/stock",
           },
+          "parent": [Circular],
         },
       ],
       "fullName": "soap:Body",
@@ -132,6 +141,7 @@ XmlNode {
       "namespace": Object {
         "m": "http://www.example.org/stock",
       },
+      "parent": [Circular],
     },
   ],
   "fullName": "soap:Envelope",
@@ -139,5 +149,6 @@ XmlNode {
   "namespace": Object {
     "soap": "http://www.w3.org/2001/12/soap-envelope",
   },
+  "parent": null,
 }
 `;

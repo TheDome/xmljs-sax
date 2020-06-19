@@ -105,7 +105,7 @@ class XmlNode {
   /**
    * A link to the parent node. Null, if this is the root of the tree
    */
-  public parent: XmlNode | null = null;
+  private _parent: XmlNode | null = null;
 
   constructor(
     name: string,
@@ -139,6 +139,10 @@ class XmlNode {
     this.value = text;
   }
 
+  set parent(parent: XmlNode) {
+    this._parent = parent;
+    this.namespace = Object.assign(this.namespace, parent.namespace);
+  }
   /**
    * Resolve the path of a child node an return the Node
    *
@@ -170,14 +174,43 @@ class XmlNode {
     );
 
     // Strip out current node
-    var childPath = path.substring(path.indexOf("/"));
+    const indexForNext = path.indexOf("/");
+    const thisName = path.substring(0, indexForNext);
+    const thisNameSpace = thisName.split(":")[0];
+    const thisLocalName = thisName.split(":")[1];
+    const childPath = path.substring(indexForNext + 1);
+    const nextChild = childPath.substring(0, childPath.indexOf("/"));
+
+    debugResolver("ThisNode: %s", thisName);
+
+    if (
+      ns[thisNameSpace] !== this.namespace[this.fullName.split(":")[0]] ||
+      this.name !== thisLocalName
+    ) {
+      if (nextChild.length === 0) {
+        // This is the searched one!
+        return this;
+      }
+      debugResolver("LocalName: %s - search: %s", this.name, thisLocalName);
+      debugResolver(
+        "NameSpace: %s - search: %s",
+        this.namespace[this.fullName.split(":")[0]],
+        ns[thisNameSpace]
+      );
+      debugResolver("Names don't match. Returning...");
+      return null;
+    }
+
+    debugResolver("Resolving childs: %s", childPath);
+    debugResolver("Next child is: %s", nextChild);
+
+    for (const c of this.childs) {
+      const r = c.resolveNSPath(childPath, ns, ignoreCase);
+      if (r) {
+        return r;
+      }
+    }
 
     return null;
   }
-
-  private resolveNSChild(
-    path: string,
-    ns: Record<string, string>,
-    ignoreCase: boolean
-  ) {}
 }
