@@ -103,112 +103,141 @@ export default class XmlNode {
       ns
     );
 
-    if (path.startsWith("//")) {
-      debugResolver("Path is an undetermined path resolver.");
-      return Promise.resolve().then(async () => {
-        let child;
-        const childSelector = path.substring(2);
+    return Promise.resolve().then(() => {
+      if (path.startsWith("//")) {
+        return this.undeterminedResolve(path, ns, ignoreCase);
+      }
 
-        let lookingForMore = false;
-        if (childSelector.indexOf("/") !== -1) {
-          // We are lookign for childs after this
-          child = childSelector.substring(0, childSelector.indexOf("/"));
-          lookingForMore = true;
+      return this.determinedResolve(path, ns, ignoreCase);
+    });
+  }
+
+  private nameMatches(
+    expectedLocalName: string,
+    expectedNameSpace: string,
+    ignoreCase: boolean
+  ): boolean {
+    var thisNS = this.namespace[this.fullName.split(":")[0]];
+    debugResolver(
+      "Checking, if the names %s - %s and the ns %s - %s match...",
+      expectedLocalName,
+      this.name,
+      expectedNameSpace,
+      thisNS
+    );
+    var result =
+      expectedNameSpace === thisNS &&
+      (ignoreCase
+        ? this.name.toLocaleLowerCase() ===
+          expectedLocalName.toLocaleLowerCase()
+        : this.name === expectedLocalName);
+
+    debugResolver("Result is: %s", result);
+    return result;
+  }
+
+  private undeterminedResolve(
+    path: string,
+    ns: Record<string, string>,
+    ignoreCase: boolean
+  ): Promise<XmlNode | null> {
+    debugResolver("Path is an undetermined path resolver.");
+    return Promise.resolve().then(async () => {
+      let child;
+      const childSelector = path.substring(2);
+
+      let lookingForMore = false;
+      if (childSelector.indexOf("/") !== -1) {
+        // We are lookign for childs after this
+        child = childSelector.substring(0, childSelector.indexOf("/"));
+        lookingForMore = true;
+      } else {
+        child = childSelector;
+      }
+      debugResolver("Looking recursively for child %s", child);
+
+      const expectedNameSpace =
+        child.indexOf(":") !== -1 ? child.split(":")[0] : "";
+      const expectedLocalName =
+        child.indexOf(":") !== -1 ? child.split(":")[1] : child;
+
+      debugResolver(
+        "Expected loclName: %s actual: %s",
+        expectedLocalName,
+        this.name
+      );
+      debugResolver(
+        "Expected nameSpace: %s actual: %s",
+        ns[expectedNameSpace],
+        this.namespace[this.fullName.split(":")[0]]
+      );
+      if (
+        this.nameMatches(expectedLocalName, ns[expectedNameSpace], ignoreCase)
+      ) {
+        debugResolver("Current name matched undetermined resolver");
+        if (lookingForMore) {
+          debugResolver("Looking for more childs inside this");
+          path = childSelector.substring(childSelector.indexOf("/")+1);
         } else {
-          child = childSelector;
+          debugResolver("Returning this!");
+          return this;
         }
-        debugResolver("Looking recursively for child %s", child);
+      }
 
-        const expectedNameSpace =
-          child.indexOf(":") !== -1 ? child.split(":")[0] : "";
-        const expectedLocalName =
-          child.indexOf(":") !== -1 ? child.split(":")[1] : child;
 
-        debugResolver(
-          "Expected loclName: %s actual: %s",
-          expectedLocalName,
-          this.name
-        );
-        debugResolver(
-          "Expected nameSpace: %s actual: %s",
-          ns[expectedNameSpace],
-          this.namespace[this.fullName.split(":")[0]]
-        );
-        if (
-          ns[expectedNameSpace] ===
-            this.namespace[this.fullName.split(":")[0]] &&
-          (ignoreCase
-            ? this.name.toLocaleLowerCase() ===
-              expectedLocalName.toLocaleLowerCase()
-            : this.name === expectedLocalName)
-        ) {
-          debugResolver("Current name matched undetermined resolver");
-          if (lookingForMore) {
-            debugResolver("Looking for more childs inside this");
-            path = childSelector.substring(childSelector.indexOf("/"));
-          } else {
-            debugResolver("Returning this!");
-            return this;
-          }
+      for (const c of this.childs) {
+        const r = await c.resolveNSPath(path, ns, ignoreCase);
+        if (r) {
+          return r;
         }
+      }
 
-        for (const c of this.childs) {
-          const r = await c.resolveNSPath(path, ns, ignoreCase);
-          if (r) {
-            return r;
-          }
-        }
+      return null;
+    });
+  }
 
-        return null;
-      });
-    }
-
+  private determinedResolve(
+    path: string,
+    ns: Record<string, string>,
+    ignoreCase: boolean
+  ): Promise<XmlNode | null> {
     return Promise.resolve().then(async () => {
       // Strip out current node
-      const indexForNext = path.indexOf("/");
+      const indexForNext = path.indexOf("/") === -1?path.length:path.indexOf("/");
       const expectedName = path.substring(0, indexForNext);
       const expectedNameSpace = expectedName.split(":")[0];
       const expectedLocalName = expectedName.split(":")[1];
       const childPath = path.substring(indexForNext + 1);
       const nextChild = childPath.substring(0, childPath.indexOf("/"));
 
-      debugResolver("Expected node name: %s", expectedName);
+      debugResolver("Expected node name: %s", expectedLocalName);
       debugResolver("Actual node name: %s", this.name);
 
       if (
-        ns[expectedNameSpace] !== this.namespace[this.fullName.split(":")[0]] ||
-        (ignoreCase
-          ? this.name.toLocaleLowerCase() !==
-            expectedLocalName.toLocaleLowerCase()
-          : this.name !== expectedLocalName)
+        this.nameMatches(expectedLocalName, ns[expectedNameSpace], ignoreCase)
       ) {
-        if (nextChild.length === 0) {
-          // This is the searched one!
-          return this;
+        // The names match...
+        debugResolver(path)
+        if(path.indexOf("/")===-1){
+          debugResolver("We are not looking for childs anymore...");
+          return this
         }
-        debugResolver(
-          "LocalName: %s - search: %s",
-          this.name,
-          expectedLocalName
-        );
-        debugResolver(
-          "NameSpace: %s - search: %s",
-          this.namespace[this.fullName.split(":")[0]],
-          ns[expectedNameSpace]
-        );
-        debugResolver("Names don't match. Returning...");
-        return null;
+        debugResolver("Names match...")
+
+
+        debugResolver("Resolving childs: %s", childPath);
+        debugResolver("Next child is: %s", nextChild);
+
+        for (const c of this.childs) {
+          const r = await c.resolveNSPath(childPath, ns, ignoreCase);
+          if (r) {
+            return r;
+          }
+        }
+
       }
 
-      debugResolver("Resolving childs: %s", childPath);
-      debugResolver("Next child is: %s", nextChild);
 
-      for (const c of this.childs) {
-        const r = await c.resolveNSPath(childPath, ns, ignoreCase);
-        if (r) {
-          return r;
-        }
-      }
 
       return null;
     });
