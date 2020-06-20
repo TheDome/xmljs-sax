@@ -57,8 +57,7 @@ export default class XmlNode {
     name: string,
     qualifiedName: string,
     uri: string,
-    namespace?: Record<string, string>,
-
+    namespace?: Record<string, string>
   ) {
     this.name = name;
     this.fullName = qualifiedName;
@@ -91,7 +90,7 @@ export default class XmlNode {
    * @param uri When a specific namespace should be found
    */
   getAttribute(name: string, uri?: string): string | null {
-    var val;
+    let val;
     if (uri) {
       val = this.attributes.find((a) => a.name === name && a.uri === uri);
     } else {

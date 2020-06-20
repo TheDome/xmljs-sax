@@ -40,9 +40,9 @@ export default function parse(xml: string, strict = true): Promise<XmlNode> {
 
       const node = new XmlNode(
         "local" in tag ? tag.local : tag.name,
-        tag.name,"uri" in tag ? tag.uri : "",
-        "ns" in tag ? tag.ns : undefined,
-
+        tag.name,
+        "uri" in tag ? tag.uri : "",
+        "ns" in tag ? tag.ns : undefined
       );
 
       for (const key in tag.attributes) {
@@ -57,8 +57,6 @@ export default function parse(xml: string, strict = true): Promise<XmlNode> {
           debug("Could not parse attr: %s", attr);
         }
       }
-
-
 
       if (!root) {
         root = node;

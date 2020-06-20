@@ -59,7 +59,7 @@ describe("XMLParser", function () {
   });
 
   it("should manage self-closing tags", async function () {
-    var xml =
+    const xml =
       '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<A:propfind xmlns:A="DAV:">\n' +
       "  <A:prop>\n" +
@@ -69,10 +69,10 @@ describe("XMLParser", function () {
       "  </A:prop>\n" +
       "</A:propfind>";
 
-    var root = await parse(xml);
+    const root = await parse(xml);
     expect(root.name).toBe("propfind");
 
-    var props = await root.resolveNSPath("A:propfind/A:prop", { A: "DAV:" });
+    const props = await root.resolveNSPath("A:propfind/A:prop", { A: "DAV:" });
 
     expect(props?.childs.length).toBe(3);
     expect(props?.childs[0].name).toBe("current-user-principal");
