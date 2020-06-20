@@ -40,8 +40,9 @@ export default function parse(xml: string, strict = true): Promise<XmlNode> {
 
       const node = new XmlNode(
         "local" in tag ? tag.local : tag.name,
-        tag.name,
-        "ns" in tag ? tag.ns : undefined
+        tag.name,"uri" in tag ? tag.uri : "",
+        "ns" in tag ? tag.ns : undefined,
+
       );
 
       for (const key in tag.attributes) {
@@ -57,14 +58,18 @@ export default function parse(xml: string, strict = true): Promise<XmlNode> {
         }
       }
 
+
+
       if (!root) {
         root = node;
       } else {
         current.addChild(node);
       }
-      // Store the current node
-      current = node;
-      stack.push(node);
+      if (!tag.isSelfClosing) {
+        // Store the current node
+        current = node;
+        stack.push(node);
+      }
     };
 
     parser.onclosetag = () => {
