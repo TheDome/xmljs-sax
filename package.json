@@ -1,7 +1,10 @@
 {
-  "name": "xmlsax",
+  "files": [
+    "lib/**/*"
+  ],
+  "name": "xmlparser",
   "version": "1.0.0",
-  "description": "A xml parser for sax written in typescript",
+  "description": "An xml parsing utility using the sax engine ",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
