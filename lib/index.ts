@@ -4,8 +4,8 @@ import XmlNode from "./XmlNode";
 
 /**
  * Parse an xml string.
- * @param xml
- * @param strict
+ * @param xml An xml string to parse
+ * @param strict Enable strict mode
  */
 export default function parse(xml: string, strict = true): Promise<XmlNode> {
   const debug = Debug("xml:parser");

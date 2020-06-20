@@ -100,4 +100,5 @@ parse(xml).then(node => {
 ### Resolver 
 
 Parses the supplied xml and returns the root node
-parse(xml, namespaces, ignoreCase = true): Promise<XmlNode>
+If strict is set to true, the sax parser will be instructed to use strict mode ( defaults to true)
+parse(xml, strict = true): Promise<XmlNode>
