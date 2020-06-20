@@ -39,6 +39,7 @@ export default class XmlNode {
    * Namespaces, which reside in this scope
    */
   private namespace: Record<string, string> = {};
+  private URI = "";
   /**
    * Attributes for this node
    */
@@ -55,10 +56,13 @@ export default class XmlNode {
   constructor(
     name: string,
     qualifiedName: string,
-    namespace?: Record<string, string>
+    uri: string,
+    namespace?: Record<string, string>,
+
   ) {
     this.name = name;
     this.fullName = qualifiedName;
+    this.URI = uri;
 
     if (namespace) {
       Object.keys(namespace).forEach((v) => {
@@ -81,6 +85,23 @@ export default class XmlNode {
     return this;
   }
 
+  /**
+   * Get the value of a specific attribute
+   * @param name The name
+   * @param uri When a specific namespace should be found
+   */
+  getAttribute(name: string, uri?: string): string | null {
+    var val;
+    if (uri) {
+      val = this.attributes.find((a) => a.name === name && a.uri === uri);
+    } else {
+      val = this.attributes.find((a) => (a.name = name));
+    }
+    val = val ? val.value : null;
+    debugNode("Found attribute value for name: %s -> %s", name, val);
+    return val;
+  }
+
   setValue(text: string): XmlNode {
     debugNode("Value of %s is: %s", this.name, text);
     this.value = text;
@@ -91,6 +112,18 @@ export default class XmlNode {
     this._parent = parent;
     this.namespace = Object.assign(this.namespace, parent.namespace);
   }
+
+  /**
+   * Get all childs, where the name and the namespace match
+   * @param name The name of the child
+   * @param ns The namespace, ehere those childs should be in
+   */
+  public getChildsWhereName(name: string, ns?: string): XmlNode[] {
+    ns = ns ? ns : "";
+    debugNode("Finding childs, where name is %s and xmlns is %s", name, ns);
+    return this.childs.filter((c) => c.name === name && c.URI === ns);
+  }
+
   /**
    * Resolve the path of a child node an return the Node
    *
