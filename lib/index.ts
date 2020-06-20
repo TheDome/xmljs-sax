@@ -61,7 +61,6 @@ export default function parse(xml: string, strict = true): Promise<XmlNode> {
     parser.onattribute = (attr) => {
       debug("Attribute found: %s=%s", attr.name, attr.value);
       if ("local" in attr) {
-
       } else {
         debug("Could not parse attr: %O", attr);
       }
@@ -87,5 +86,3 @@ export default function parse(xml: string, strict = true): Promise<XmlNode> {
     parser.write(xml).end();
   });
 }
-
-

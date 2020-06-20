@@ -117,7 +117,7 @@ export default class XmlNode {
     expectedNameSpace: string,
     ignoreCase: boolean
   ): boolean {
-    var thisNS = this.namespace[this.fullName.split(":")[0]];
+    const thisNS = this.namespace[this.fullName.split(":")[0]];
     debugResolver(
       "Checking, if the names %s - %s and the ns %s - %s match...",
       expectedLocalName,
@@ -125,7 +125,7 @@ export default class XmlNode {
       expectedNameSpace,
       thisNS
     );
-    var result =
+    const result =
       expectedNameSpace === thisNS &&
       (ignoreCase
         ? this.name.toLocaleLowerCase() ===
@@ -177,13 +177,12 @@ export default class XmlNode {
         debugResolver("Current name matched undetermined resolver");
         if (lookingForMore) {
           debugResolver("Looking for more childs inside this");
-          path = childSelector.substring(childSelector.indexOf("/")+1);
+          path = childSelector.substring(childSelector.indexOf("/") + 1);
         } else {
           debugResolver("Returning this!");
           return this;
         }
       }
-
 
       for (const c of this.childs) {
         const r = await c.resolveNSPath(path, ns, ignoreCase);
@@ -203,7 +202,8 @@ export default class XmlNode {
   ): Promise<XmlNode | null> {
     return Promise.resolve().then(async () => {
       // Strip out current node
-      const indexForNext = path.indexOf("/") === -1?path.length:path.indexOf("/");
+      const indexForNext =
+        path.indexOf("/") === -1 ? path.length : path.indexOf("/");
       const expectedName = path.substring(0, indexForNext);
       const expectedNameSpace = expectedName.split(":")[0];
       const expectedLocalName = expectedName.split(":")[1];
@@ -217,13 +217,12 @@ export default class XmlNode {
         this.nameMatches(expectedLocalName, ns[expectedNameSpace], ignoreCase)
       ) {
         // The names match...
-        debugResolver(path)
-        if(path.indexOf("/")===-1){
+        debugResolver(path);
+        if (path.indexOf("/") === -1) {
           debugResolver("We are not looking for childs anymore...");
-          return this
+          return this;
         }
-        debugResolver("Names match...")
-
+        debugResolver("Names match...");
 
         debugResolver("Resolving childs: %s", childPath);
         debugResolver("Next child is: %s", nextChild);
@@ -234,10 +233,7 @@ export default class XmlNode {
             return r;
           }
         }
-
       }
-
-
 
       return null;
     });
