@@ -54,7 +54,7 @@ describe("XMLParser", function () {
       "  </soap:Body>\n" +
       "\n" +
       "</soap:Envelope>";
-    var root = await parse(xml);
+    const root = await parse(xml);
     expect(root).toMatchSnapshot();
 
     expect(root.childs.length).toBe(1);
@@ -174,7 +174,7 @@ describe("Resolver", function () {
 
 describe("Finding childs", function () {
   it("should find children by a specific filter", async function () {
-    var xml =
+    const xml =
       '<?xml version="1.0" encoding="UTF-8"?>\n' +
       '<B:calendar-multiget xmlns:B="urn:ietf:params:xml:ns:caldav" >\n' +
       '  <A:prop xmlns:A="DAV:">\n' +
@@ -189,13 +189,13 @@ describe("Finding childs", function () {
       '\t<A:href xmlns:A="DAV:">3.ics</A:href>\n' +
       "</B:calendar-multiget>";
 
-    var root = await parse(xml);
+    const root = await parse(xml);
 
     expect(root.name).toBe("calendar-multiget");
     expect(root.URI).toBe("urn:ietf:params:xml:ns:caldav");
     expect(root.childs.length).toBe(4);
 
-    var href = root.getChildsWhereName("href", "DAV:");
+    const href = root.getChildsWhereName("href", "DAV:");
 
     expect(href.length).toBe(3);
     expect(href[0].value).toBe("2.ics");
