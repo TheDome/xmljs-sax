@@ -43,7 +43,6 @@ describe("XMLParser", function () {
       "<soap:Envelope\n" +
       'xmlns:soap="http://www.w3.org/2001/12/soap-envelope"\n' +
       'soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">\n' +
-      "\n" +
       '  <soap:Body xmlns:m="http://www.example.org/stock">\n' +
       "    <m:GetStockPriceResponse>\n" +
       "      <m:Price>34.5</m:Price>\n" +
@@ -55,7 +54,14 @@ describe("XMLParser", function () {
       "  </soap:Body>\n" +
       "\n" +
       "</soap:Envelope>";
-    await expect(parse(xml)).resolves.toMatchSnapshot();
+    var root = await parse(xml);
+    expect(root).toMatchSnapshot();
+
+    expect(root.childs.length).toBe(1);
+    expect(root.childs[0].name).toBe("Body");
+    expect(root.childs[0].childs.length).toBe(2);
+    expect(root.childs[0].childs[1].childs.length).toBe(2);
+    expect(root.childs[0].childs[0].childs.length).toBe(1);
   });
 
   it("should manage self-closing tags", async function () {
@@ -67,6 +73,7 @@ describe("XMLParser", function () {
       "    <A:principal-URL/>\n" +
       "    <A:resourcetype/>\n" +
       "  </A:prop>\n" +
+      '\t<A:href xmlns:A="DAV:">2.ics</A:href>\n' +
       "</A:propfind>";
 
     const root = await parse(xml);
@@ -162,5 +169,35 @@ describe("Resolver", function () {
 
     expect(priceNode).not.toBeNull();
     expect(priceNode?.value).toEqual("34.5");
+  });
+});
+
+describe("Finding childs", function () {
+  it("should find children by a specific filter", async function () {
+    var xml =
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<B:calendar-multiget xmlns:B="urn:ietf:params:xml:ns:caldav" >\n' +
+      '  <A:prop xmlns:A="DAV:">\n' +
+      "    <A:getetag/>\n" +
+      "    <B:calendar-data/>\n" +
+      '    <C:created-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      '    <C:updated-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      "    <B:schedule-tag/>\n" +
+      "  </A:prop>\n" +
+      '\t<A:href xmlns:A="DAV:">2.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">1.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">3.ics</A:href>\n' +
+      "</B:calendar-multiget>";
+
+    var root = await parse(xml);
+
+    expect(root.name).toBe("calendar-multiget");
+    expect(root.URI).toBe("urn:ietf:params:xml:ns:caldav");
+    expect(root.childs.length).toBe(4);
+
+    var href = root.getChildsWhereName("href", "DAV:");
+
+    expect(href.length).toBe(3);
+    expect(href[0].value).toBe("2.ics");
   });
 });

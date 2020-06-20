@@ -30,6 +30,7 @@ export interface XmlAttribute {
 
 const debugNode = Debug("xml:node");
 const debugResolver = Debug("xml:noderesolver");
+ const debugChildfinder = Debug("xml:nodechildfinder");
 export default class XmlNode {
   /**
    * The name of the node
@@ -39,7 +40,7 @@ export default class XmlNode {
    * Namespaces, which reside in this scope
    */
   private namespace: Record<string, string> = {};
-  private URI = "";
+  public readonly URI: string;
   /**
    * Attributes for this node
    */
@@ -56,7 +57,7 @@ export default class XmlNode {
   constructor(
     name: string,
     qualifiedName: string,
-    uri: string,
+    uri = "",
     namespace?: Record<string, string>
   ) {
     this.name = name;
@@ -120,7 +121,9 @@ export default class XmlNode {
   public getChildsWhereName(name: string, ns?: string): XmlNode[] {
     ns = ns ? ns : "";
     debugNode("Finding childs, where name is %s and xmlns is %s", name, ns);
-    return this.childs.filter((c) => c.name === name && c.URI === ns);
+    return this.childs.filter((c) => {
+      debugChildfinder("Iterating over child: %s", c.name)
+      return c.name === name && c.URI === ns});
   }
 
   /**
