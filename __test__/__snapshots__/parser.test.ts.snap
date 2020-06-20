@@ -2,6 +2,7 @@
 
 exports[`XMLParser should read a complicated XML 1`] = `
 XmlNode {
+  "_parent": null,
   "attributes": Array [
     Object {
       "local": "encodingStyle",
@@ -13,29 +14,35 @@ XmlNode {
   ],
   "childs": Array [
     XmlNode {
+      "_parent": [Circular],
       "attributes": Array [],
       "childs": Array [
         XmlNode {
+          "_parent": [Circular],
           "attributes": Array [],
           "childs": Array [
             XmlNode {
+              "_parent": [Circular],
               "attributes": Array [],
               "childs": Array [
                 XmlNode {
+                  "_parent": [Circular],
                   "attributes": Array [],
                   "childs": Array [
                     XmlNode {
+                      "_parent": [Circular],
                       "attributes": Array [],
                       "childs": Array [
                         XmlNode {
+                          "_parent": [Circular],
                           "attributes": Array [],
                           "childs": Array [],
                           "fullName": "m:priCe",
                           "name": "priCe",
                           "namespace": Object {
                             "m": "http://www.example.org/stock",
+                            "soap": "http://www.w3.org/2001/12/soap-envelope",
                           },
-                          "parent": [Circular],
                           "value": "36.5",
                         },
                       ],
@@ -43,8 +50,8 @@ XmlNode {
                       "name": "Price",
                       "namespace": Object {
                         "m": "http://www.example.org/stock",
+                        "soap": "http://www.w3.org/2001/12/soap-envelope",
                       },
-                      "parent": [Circular],
                       "value": "35.5",
                     },
                   ],
@@ -52,16 +59,16 @@ XmlNode {
                   "name": "GetStockPriceResponse",
                   "namespace": Object {
                     "m": "http://www.example.org/stock",
+                    "soap": "http://www.w3.org/2001/12/soap-envelope",
                   },
-                  "parent": [Circular],
                 },
               ],
               "fullName": "m:Price",
               "name": "Price",
               "namespace": Object {
                 "m": "http://www.example.org/stock",
+                "soap": "http://www.w3.org/2001/12/soap-envelope",
               },
-              "parent": [Circular],
               "value": "34.5",
             },
           ],
@@ -69,16 +76,16 @@ XmlNode {
           "name": "GetStockPriceResponse",
           "namespace": Object {
             "m": "http://www.example.org/stock",
+            "soap": "http://www.w3.org/2001/12/soap-envelope",
           },
-          "parent": [Circular],
         },
       ],
       "fullName": "soap:Body",
       "name": "Body",
       "namespace": Object {
         "m": "http://www.example.org/stock",
+        "soap": "http://www.w3.org/2001/12/soap-envelope",
       },
-      "parent": [Circular],
     },
   ],
   "fullName": "soap:Envelope",
@@ -86,12 +93,12 @@ XmlNode {
   "namespace": Object {
     "soap": "http://www.w3.org/2001/12/soap-envelope",
   },
-  "parent": null,
 }
 `;
 
 exports[`XMLParser should read a simple XML 1`] = `
 XmlNode {
+  "_parent": null,
   "attributes": Array [
     Object {
       "local": "encodingStyle",
@@ -103,12 +110,15 @@ XmlNode {
   ],
   "childs": Array [
     XmlNode {
+      "_parent": [Circular],
       "attributes": Array [],
       "childs": Array [
         XmlNode {
+          "_parent": [Circular],
           "attributes": Array [],
           "childs": Array [
             XmlNode {
+              "_parent": [Circular],
               "attributes": Array [
                 Object {
                   "local": "includedVat",
@@ -123,8 +133,8 @@ XmlNode {
               "name": "Price",
               "namespace": Object {
                 "m": "http://www.example.org/stock",
+                "soap": "http://www.w3.org/2001/12/soap-envelope",
               },
-              "parent": [Circular],
               "value": "34.5",
             },
           ],
@@ -132,16 +142,16 @@ XmlNode {
           "name": "GetStockPriceResponse",
           "namespace": Object {
             "m": "http://www.example.org/stock",
+            "soap": "http://www.w3.org/2001/12/soap-envelope",
           },
-          "parent": [Circular],
         },
       ],
       "fullName": "soap:Body",
       "name": "Body",
       "namespace": Object {
         "m": "http://www.example.org/stock",
+        "soap": "http://www.w3.org/2001/12/soap-envelope",
       },
-      "parent": [Circular],
     },
   ],
   "fullName": "soap:Envelope",
@@ -149,6 +159,5 @@ XmlNode {
   "namespace": Object {
     "soap": "http://www.w3.org/2001/12/soap-envelope",
   },
-  "parent": null,
 }
 `;
