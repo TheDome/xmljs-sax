@@ -23,7 +23,7 @@
     "sax.js"
   ],
   "author": "TheDome",
-  "license": "ISC",
+  "license": "GPL",
   "devDependencies": {
     "@types/debug": "^4.1.5",
     "@types/jest": "^26.0.0",
