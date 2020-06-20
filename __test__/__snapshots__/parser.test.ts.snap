@@ -28,48 +28,7 @@ XmlNode {
               "URI": "http://www.example.org/stock",
               "_parent": [Circular],
               "attributes": Array [],
-              "childs": Array [
-                XmlNode {
-                  "URI": "http://www.example.org/stock",
-                  "_parent": [Circular],
-                  "attributes": Array [],
-                  "childs": Array [
-                    XmlNode {
-                      "URI": "http://www.example.org/stock",
-                      "_parent": [Circular],
-                      "attributes": Array [],
-                      "childs": Array [
-                        XmlNode {
-                          "URI": "http://www.example.org/stock",
-                          "_parent": [Circular],
-                          "attributes": Array [],
-                          "childs": Array [],
-                          "fullName": "m:priCe",
-                          "name": "priCe",
-                          "namespace": Object {
-                            "m": "http://www.example.org/stock",
-                            "soap": "http://www.w3.org/2001/12/soap-envelope",
-                          },
-                          "value": "36.5",
-                        },
-                      ],
-                      "fullName": "m:Price",
-                      "name": "Price",
-                      "namespace": Object {
-                        "m": "http://www.example.org/stock",
-                        "soap": "http://www.w3.org/2001/12/soap-envelope",
-                      },
-                      "value": "35.5",
-                    },
-                  ],
-                  "fullName": "m:GetStockPriceResponse",
-                  "name": "GetStockPriceResponse",
-                  "namespace": Object {
-                    "m": "http://www.example.org/stock",
-                    "soap": "http://www.w3.org/2001/12/soap-envelope",
-                  },
-                },
-              ],
+              "childs": Array [],
               "fullName": "m:Price",
               "name": "Price",
               "namespace": Object {
@@ -77,6 +36,45 @@ XmlNode {
                 "soap": "http://www.w3.org/2001/12/soap-envelope",
               },
               "value": "34.5",
+            },
+          ],
+          "fullName": "m:GetStockPriceResponse",
+          "name": "GetStockPriceResponse",
+          "namespace": Object {
+            "m": "http://www.example.org/stock",
+            "soap": "http://www.w3.org/2001/12/soap-envelope",
+          },
+        },
+        XmlNode {
+          "URI": "http://www.example.org/stock",
+          "_parent": [Circular],
+          "attributes": Array [],
+          "childs": Array [
+            XmlNode {
+              "URI": "http://www.example.org/stock",
+              "_parent": [Circular],
+              "attributes": Array [],
+              "childs": Array [],
+              "fullName": "m:Price",
+              "name": "Price",
+              "namespace": Object {
+                "m": "http://www.example.org/stock",
+                "soap": "http://www.w3.org/2001/12/soap-envelope",
+              },
+              "value": "35.5",
+            },
+            XmlNode {
+              "URI": "http://www.example.org/stock",
+              "_parent": [Circular],
+              "attributes": Array [],
+              "childs": Array [],
+              "fullName": "m:priCe",
+              "name": "priCe",
+              "namespace": Object {
+                "m": "http://www.example.org/stock",
+                "soap": "http://www.w3.org/2001/12/soap-envelope",
+              },
+              "value": "36.5",
             },
           ],
           "fullName": "m:GetStockPriceResponse",
