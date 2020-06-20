@@ -58,23 +58,24 @@ describe("XMLParser", function () {
     await expect(parse(xml)).resolves.toMatchSnapshot();
   });
 
-  it('should manage self-closing tags', async function () {
-    var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-        "<A:propfind xmlns:A=\"DAV:\">\n" +
-        "  <A:prop>\n" +
-        "    <A:current-user-principal/>\n" +
-        "    <A:principal-URL/>\n" +
-        "    <A:resourcetype/>\n" +
-        "  </A:prop>\n" +
-        "</A:propfind>"
+  it("should manage self-closing tags", async function () {
+    var xml =
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<A:propfind xmlns:A="DAV:">\n' +
+      "  <A:prop>\n" +
+      "    <A:current-user-principal/>\n" +
+      "    <A:principal-URL/>\n" +
+      "    <A:resourcetype/>\n" +
+      "  </A:prop>\n" +
+      "</A:propfind>";
 
     var root = await parse(xml);
-    expect(root.name).toBe("propfind")
+    expect(root.name).toBe("propfind");
 
-    var props = await root.resolveNSPath("A:propfind/A:prop", {A:"DAV:"})
+    var props = await root.resolveNSPath("A:propfind/A:prop", { A: "DAV:" });
 
-    expect(props?.childs.length).toBe(3)
-    expect(props?.childs[0].name).toBe("current-user-principal")
+    expect(props?.childs.length).toBe(3);
+    expect(props?.childs[0].name).toBe("current-user-principal");
   });
 });
 
