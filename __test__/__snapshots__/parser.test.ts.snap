@@ -2,6 +2,7 @@
 
 exports[`XMLParser should read a complicated XML 1`] = `
 XmlNode {
+  "URI": "http://www.w3.org/2001/12/soap-envelope",
   "_parent": null,
   "attributes": Array [
     Object {
@@ -14,26 +15,32 @@ XmlNode {
   ],
   "childs": Array [
     XmlNode {
+      "URI": "http://www.w3.org/2001/12/soap-envelope",
       "_parent": [Circular],
       "attributes": Array [],
       "childs": Array [
         XmlNode {
+          "URI": "http://www.example.org/stock",
           "_parent": [Circular],
           "attributes": Array [],
           "childs": Array [
             XmlNode {
+              "URI": "http://www.example.org/stock",
               "_parent": [Circular],
               "attributes": Array [],
               "childs": Array [
                 XmlNode {
+                  "URI": "http://www.example.org/stock",
                   "_parent": [Circular],
                   "attributes": Array [],
                   "childs": Array [
                     XmlNode {
+                      "URI": "http://www.example.org/stock",
                       "_parent": [Circular],
                       "attributes": Array [],
                       "childs": Array [
                         XmlNode {
+                          "URI": "http://www.example.org/stock",
                           "_parent": [Circular],
                           "attributes": Array [],
                           "childs": Array [],
@@ -98,6 +105,7 @@ XmlNode {
 
 exports[`XMLParser should read a simple XML 1`] = `
 XmlNode {
+  "URI": "http://www.w3.org/2001/12/soap-envelope",
   "_parent": null,
   "attributes": Array [
     Object {
@@ -110,14 +118,17 @@ XmlNode {
   ],
   "childs": Array [
     XmlNode {
+      "URI": "http://www.w3.org/2001/12/soap-envelope",
       "_parent": [Circular],
       "attributes": Array [],
       "childs": Array [
         XmlNode {
+          "URI": "http://www.example.org/stock",
           "_parent": [Circular],
           "attributes": Array [],
           "childs": Array [
             XmlNode {
+              "URI": "http://www.example.org/stock",
               "_parent": [Circular],
               "attributes": Array [
                 Object {
