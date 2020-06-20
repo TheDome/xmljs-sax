@@ -10,11 +10,15 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "lint": "eslint --fix lib/**/* __test__/**/*.ts"
+    "lint": "eslint --fix lib/**/* __test__/**/*.ts",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm run test",
+    "version" : "npm run lint && git add -A lib",
+    "postversion" : "git push && git push --tags"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheDome/xmljs-sax"
+    "url": "git+https://github.com/TheDome/xmljs-sax"
   },
   "bugs": {
     "url": "https://github.com/TheDome/xmljs-sax/issues"
