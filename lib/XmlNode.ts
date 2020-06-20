@@ -30,7 +30,7 @@ export interface XmlAttribute {
 
 const debugNode = Debug("xml:node");
 const debugResolver = Debug("xml:noderesolver");
- const debugChildfinder = Debug("xml:nodechildfinder");
+const debugChildfinder = Debug("xml:nodechildfinder");
 export default class XmlNode {
   /**
    * The name of the node
@@ -122,8 +122,21 @@ export default class XmlNode {
     ns = ns ? ns : "";
     debugNode("Finding childs, where name is %s and xmlns is %s", name, ns);
     return this.childs.filter((c) => {
-      debugChildfinder("Iterating over child: %s", c.name)
-      return c.name === name && c.URI === ns});
+      debugChildfinder("Iterating over child: %s", c.name);
+      return c.name === name && c.URI === ns;
+    });
+  }
+
+  public hasChild(name: string, ns?: string): boolean {
+    debugChildfinder("Querying hasChild: %s:%s", name, ns);
+
+    if (ns) {
+      return (
+        this.childs.find((e) => e.name == name && e.URI == ns) !== undefined
+      );
+    } else {
+      return this.childs.find((e) => e.name == name) !== undefined;
+    }
   }
 
   /**
