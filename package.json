@@ -1,8 +1,8 @@
 {
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
-  "name": "xmlparser",
+  "name": "saxxmlparser",
   "version": "1.0.0",
   "description": "An xml parsing utility using the sax engine ",
   "main": "dist/index.js",
