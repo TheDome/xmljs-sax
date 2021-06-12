@@ -64,12 +64,11 @@ export default function parse(xml: string, strict = true): Promise<XmlNode> {
         current.addChild(node);
       }
 
-
-        // Store the current node
-      if(!tag.isSelfClosing){
-        current=node;}
-        stack.push(node);
-
+      // Store the current node
+      if (!tag.isSelfClosing) {
+        current = node;
+      }
+      stack.push(node);
     };
 
     parser.onclosetag = () => {
@@ -77,8 +76,8 @@ export default function parse(xml: string, strict = true): Promise<XmlNode> {
       const tag = stack.pop();
       if (tag) {
         debug("Tag %s closed", tag.name);
-        if(stack.length>0){
-          current=stack[stack.length-1]
+        if (stack.length > 0) {
+          current = stack[stack.length - 1];
         }
       } else {
         debug("Tag closed: undefined");
