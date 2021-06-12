@@ -1,8 +1,9 @@
 name: Publish module
 
-on: 
+on:
   push: 
-    tags: {}
+    tags: v[1-9]+.[0-9]+.[0-9]+
+    branches: master
 
 jobs:
   build:
