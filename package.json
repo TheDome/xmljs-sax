@@ -3,7 +3,7 @@
     "dist/**/*"
   ],
   "name": "saxxmlparser",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "An xml parsing utility using the sax engine ",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
