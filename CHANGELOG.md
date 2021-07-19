@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.7](https://github.com/TheDome/xmljs-sax/compare/1.2.6...1.2.7) - 2021-06-29
+
+### Commits
+
+- Update dependencies [`a49783e`](https://github.com/TheDome/xmljs-sax/commit/a49783e0dc522cd3d6ef278942bd204fa0391784)
+- Release 1.2.7 [`40514e9`](https://github.com/TheDome/xmljs-sax/commit/40514e927cbf267d83ee173deefdbe8565db7ffe)
+
 ## [1.2.6](https://github.com/TheDome/xmljs-sax/compare/1.2.5...1.2.6) - 2021-06-21
 
 ### Merged
