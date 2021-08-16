@@ -38,7 +38,7 @@
   "license": "GPL",
   "devDependencies": {
     "@types/debug": "^4.1.7",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.0.1",
     "@types/sax": "^1.2.3",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.29.0",
