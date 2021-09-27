@@ -1,3 +1,11 @@
+## [1.3.4](https://github.com/TheDome/xmljs-sax/compare/1.3.3...1.3.4) (2021-09-27)
+
+
+### Bug Fixes
+
+* fetch less ([#98](https://github.com/TheDome/xmljs-sax/issues/98)) ([36b4773](https://github.com/TheDome/xmljs-sax/commit/36b47739042ded5c722bd31effcfe0e39c023f41))
+* rename pipeline ([2a73f42](https://github.com/TheDome/xmljs-sax/commit/2a73f4203421b3eea5b621a84b625ae0be2d04de))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
