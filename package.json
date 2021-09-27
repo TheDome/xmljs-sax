@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheDome/xmljs-sax"
+    "url": "https://github.com/TheDome/xmljs-sax.git"
   },
   "bugs": {
     "url": "https://github.com/TheDome/xmljs-sax/issues"
