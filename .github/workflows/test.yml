@@ -7,6 +7,15 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
+  audit:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: sdlc:audit
+        run: |
+          npm ci
+          npx audit-ci --high
   build-test:
     runs-on: ubuntu-latest
     strategy:
@@ -24,6 +33,8 @@ jobs:
       - run: npm test
         env:
           CI: true
+      - uses: codecov/codecov-action@v2
+        
   lint:
     runs-on: ubuntu-latest
     steps:
