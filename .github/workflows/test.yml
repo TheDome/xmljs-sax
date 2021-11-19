@@ -45,12 +45,10 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
         name: Build
-      - run: npm test
+      - run: npm test -- --coverage
         env:
           CI: true
       - uses: codecov/codecov-action@v2
-        with:
-          files: './coverage/lcov.info'
         
   lint:
     runs-on: ubuntu-latest
