@@ -17,6 +17,7 @@
  *  along with Foobar.  If not, see <https://www.gnu.org/licenses>
  */
 
+import exp from "constants";
 import parse from "../lib";
 
 describe("XMLParser", function () {
@@ -199,5 +200,118 @@ describe("Finding childs", function () {
 
     expect(href.length).toBe(3);
     expect(href[0].value).toBe("2.ics");
+  });
+
+  it("Should find a specific child", async () => {
+    const xml =
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<B:calendar-multiget xmlns:B="urn:ietf:params:xml:ns:caldav" >\n' +
+      '  <A:prop xmlns:A="DAV:">\n' +
+      "    <A:getetag/>\n" +
+      "    <B:calendar-data/>\n" +
+      '    <C:created-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      '    <C:updated-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      "    <B:schedule-tag/>\n" +
+      "  </A:prop>\n" +
+      '\t<A:href xmlns:A="DAV:">2.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">1.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">3.ics</A:href>\n' +
+      "</B:calendar-multiget>";
+
+    const root = await parse(xml);
+
+    expect(root.hasChild("prop")).toBeTruthy();
+  });
+
+  it("Should find a child in a specific namespace", async () => {
+    const xml =
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<B:calendar-multiget xmlns:B="urn:ietf:params:xml:ns:caldav" >\n' +
+      '  <A:prop xmlns:A="DAV:">\n' +
+      "    <A:getetag/>\n" +
+      "    <B:calendar-data/>\n" +
+      '    <C:created-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      '    <C:updated-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      "    <B:schedule-tag/>\n" +
+      "  </A:prop>\n" +
+      '\t<A:href xmlns:A="DAV:">2.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">1.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">3.ics</A:href>\n' +
+      "</B:calendar-multiget>";
+
+    const root = await parse(xml);
+
+    expect(root.hasChild("prop", "DAV:")).toBeTruthy();
+  });
+
+  it("Should not find a child not in a specific namespace", async () => {
+    const xml =
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<B:calendar-multiget xmlns:B="urn:ietf:params:xml:ns:caldav" >\n' +
+      '  <A:prop xmlns:A="DAV:">\n' +
+      "    <A:getetag/>\n" +
+      "    <B:calendar-data/>\n" +
+      '    <C:created-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      '    <C:updated-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      "    <B:schedule-tag/>\n" +
+      "  </A:prop>\n" +
+      '\t<A:href xmlns:A="DAV:">2.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">1.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">3.ics</A:href>\n' +
+      "</B:calendar-multiget>";
+
+    const root = await parse(xml);
+
+    expect(root.hasChild("prop", "http://calendarserver.org/ns/")).toBeFalsy();
+  });
+});
+
+describe("XmlNode", () => {
+  it("Should identify an attribute", async () => {
+    const xml =
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<B:calendar-multiget xmlns:B="urn:ietf:params:xml:ns:caldav" test="yes">\n' +
+      '  <A:prop xmlns:A="DAV:">\n' +
+      "    <A:getetag/>\n" +
+      "    <B:calendar-data/>\n" +
+      '    <C:created-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      '    <C:updated-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      "    <B:schedule-tag/>\n" +
+      "  </A:prop>\n" +
+      '\t<A:href xmlns:A="DAV:">2.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">1.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">3.ics</A:href>\n' +
+      "</B:calendar-multiget>";
+
+    const root = await parse(xml);
+
+    const attr = root.getAttribute("test");
+
+    expect(attr).not.toBeNull();
+    expect(attr).toBe("yes");
+  });
+
+  it("Should identify an attribute in a specific domain", async () => {
+    const xml =
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<B:calendar-multiget xmlns:B="urn:ietf:params:xml:ns:caldav" B:test="yes">\n' +
+      '  <A:prop xmlns:A="DAV:">\n' +
+      "    <A:getetag/>\n" +
+      "    <B:calendar-data/>\n" +
+      '    <C:created-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      '    <C:updated-by xmlns:C="http://calendarserver.org/ns/"/>\n' +
+      "    <B:schedule-tag/>\n" +
+      "  </A:prop>\n" +
+      '\t<A:href xmlns:A="DAV:">2.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">1.ics</A:href>\n' +
+      '\t<A:href xmlns:A="DAV:">3.ics</A:href>\n' +
+      "</B:calendar-multiget>";
+
+    const root = await parse(xml);
+
+    const attr = root.getAttribute("test", "urn:ietf:params:xml:ns:caldav");
+
+    expect(attr).not.toBeNull();
+    expect(attr).toBe("yes");
   });
 });

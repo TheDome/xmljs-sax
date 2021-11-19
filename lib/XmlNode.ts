@@ -61,6 +61,11 @@ export default class XmlNode {
   addAttribute(attr: QualifiedAttribute): XmlNode {
     if (attr.prefix === "xmlns") return this;
 
+    if (attr.uri !== "") {
+      // stript the prefix
+      attr.name = attr.name.substr(attr.prefix.length + 1);
+    }
+
     debugNode("Adding attribute: %O", attr);
     this.attributes.push(attr as XmlAttribute);
     return this;

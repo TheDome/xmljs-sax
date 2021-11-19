@@ -24,7 +24,7 @@
     "sax.js"
   ],
   "author": "TheDome",
-  "license": "BSD-2",
+  "license": "BSD",
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "@types/jest": "^27.0.2",

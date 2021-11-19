@@ -7,7 +7,7 @@ XmlNode {
   "attributes": Array [
     Object {
       "local": "encodingStyle",
-      "name": "soap:encodingStyle",
+      "name": "encodingStyle",
       "prefix": "soap",
       "uri": "http://www.w3.org/2001/12/soap-envelope",
       "value": "http://www.w3.org/2001/12/soap-encoding",
@@ -108,7 +108,7 @@ XmlNode {
   "attributes": Array [
     Object {
       "local": "encodingStyle",
-      "name": "soap:encodingStyle",
+      "name": "encodingStyle",
       "prefix": "soap",
       "uri": "http://www.w3.org/2001/12/soap-envelope",
       "value": "http://www.w3.org/2001/12/soap-encoding",
