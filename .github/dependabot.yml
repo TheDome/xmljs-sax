@@ -10,7 +10,9 @@ updates:
     target-branch: develop
     open-pull-requests-limit: 5
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: '02:00'
+      timezone: Europe/Berlin
     commit-message:
       prefix: fix
       prefix-development: chore
