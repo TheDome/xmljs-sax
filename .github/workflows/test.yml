@@ -2,7 +2,7 @@ name: Test and publish
 
 on:
   push:
-  pull_request_target:
+  pull_request:
   schedule:
     - cron: "0 0 * * *"
 
@@ -67,3 +67,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  auto-merge:
+    needs:
+      - semantic-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: fastify/github-action-merge-dependabot@v2.1.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
