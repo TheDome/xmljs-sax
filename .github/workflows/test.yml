@@ -2,12 +2,24 @@ name: Test and publish
 
 on:
   push:
-  pull_request_target:
+    branches:
+      - master
+      - develop
+  pull_request:
   schedule:
     - cron: "0 0 * * *"
 
 jobs:
-  build-test:
+  audit:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: sdlc:audit
+        run: |
+          npm ci
+          npx audit-ci --high
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -15,36 +27,52 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build on Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
         name: Build
-      - run: npm test
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node 16
+        uses: actions/setup-node@v2.4.1
+        with:
+          node-version: 16.x
+      - run: npm ci --ignore-scripts
+      - run: npm run build --if-present
+        name: Build
+      - run: npm test -- --coverage
         env:
           CI: true
+      - uses: codecov/codecov-action@v2
+        
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Build on Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci --ignore-scripts
       - run: npm run lint
+        
   semantic-release:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs:
       - lint
-      - build-test
+      - build
+      - test
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v2.4.0
+      - uses: actions/setup-node@v2.4.1
         with:
           node-version: "14"
       - shell: bash
@@ -67,3 +95,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  auto-merge:
+    needs:
+      - semantic-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - uses: fastify/github-action-merge-dependabot@v2.1.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
