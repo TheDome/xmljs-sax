@@ -8,6 +8,10 @@ on:
   pull_request:
   schedule:
     - cron: "0 0 * * *"
+      
+concurrency:
+  cancel-in-progress: true
+  group: "test-and-publish-${{ github.ref }}"
 
 jobs:
   
