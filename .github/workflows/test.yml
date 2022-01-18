@@ -15,6 +15,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: sdlc:audit
         run: |
           npm ci
@@ -23,13 +29,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [12.x, 14.x, 16.x, 17.x ]
     steps:
       - uses: actions/checkout@v2
       - name: Build on Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
         name: Build
@@ -42,6 +54,12 @@ jobs:
         uses: actions/setup-node@v2.4.1
         with:
           node-version: 16.x
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
         name: Build
@@ -75,14 +93,23 @@ jobs:
       - uses: actions/setup-node@v2.4.1
         with:
           node-version: "14"
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm publish --dry-run
       - shell: bash
         run: |
           sudo npm install -g \
-            semantic-release@18.0.0 \
-            @semantic-release/git@10.0.0 \
-            @semantic-release/release-notes-generator@10.0.2 \
-            @semantic-release/github@8.0.0 \
-            @semantic-release/npm@8.0.0
+            semantic-release@latest \
+            @semantic-release/git@latest \
+            @semantic-release/release-notes-generator@latest \
+            @semantic-release/github@latest \
+            @semantic-release/npm@latest
       - shell: bash
         run: |
           semantic-release \
