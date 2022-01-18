@@ -144,7 +144,7 @@ jobs:
           semantic-release \
             --branches master \
             --plugins "@semantic-release/commit-analyzer,@semantic-release/release-notes-generator,@semantic-release/git,@semantic-release/github,@semantic-release/npm" \
-            --tag-format '${version}' \
+            --tag-format "\${version}" \
             --debug true
         env:
           GH_TOKEN: ${{ github.token }}
