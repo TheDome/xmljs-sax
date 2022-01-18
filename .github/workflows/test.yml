@@ -41,25 +41,28 @@ jobs:
           path: |
             ~/.npm
             node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{matrix.node-version}}-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
         name: Build
 
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x, 17.x ]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node 16
+      - name: Install Node ${{ matrix.node-version }}
         uses: actions/setup-node@v2.4.1
         with:
-          node-version: 16.x
+          node-version: ${{ matrix.node-version }}
       - uses: actions/cache@v2
         with:
           path: |
             ~/.npm
             node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{matrix.node-version}}-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci --ignore-scripts
       - run: npm run build --if-present
         name: Build
@@ -72,13 +75,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build on Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.4.1
+      - uses: actions/setup-node@v2.4.1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 17.x
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-17.x-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci --ignore-scripts
       - run: npm run lint
-        
+  action-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download actionlint
+        id: get_actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        shell: bash
+
+      - name: actionlint version
+        run: ${{ steps.get_actionlint.outputs.executable }} -version
+        shell: bash
+
+      - name: Check workflow files
+        # TODO: include composites (https://github.com/rhysd/actionlint/issues/46)
+        run: ${{ steps.get_actionlint.outputs.executable }} -color -verbose
+        shell: bash 
+
   semantic-release:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -86,19 +114,20 @@ jobs:
       - lint
       - build
       - test
+      - action-lint
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - uses: actions/setup-node@v2.4.1
         with:
-          node-version: "14"
+          node-version: 17.x
       - uses: actions/cache@v2
         with:
           path: |
             ~/.npm
             node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-17.x-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci --ignore-scripts
       - run: npm run build
       - run: npm publish --dry-run
@@ -121,6 +150,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   auto-merge:
     needs:
       - semantic-release
@@ -129,7 +159,6 @@ jobs:
       pull-requests: write
       contents: write
     steps:
-      - uses: actions/checkout@v2.4.0
       - uses: fastify/github-action-merge-dependabot@v3.0.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
