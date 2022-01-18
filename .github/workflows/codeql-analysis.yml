@@ -23,6 +23,10 @@ on:
       - develop
   schedule:
     - cron: '43 23 * * 3'
+      
+concurrency:
+  cancel-in-progress: true
+  group: "codeql-analysis-${{ github.ref }}"
 
 jobs:
   analyze:
