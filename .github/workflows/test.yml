@@ -18,7 +18,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3.0.0
         with:
           node-version: 17.x
@@ -35,7 +35,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Download actionlint
         id: get_actionlint
@@ -55,7 +55,7 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/cache@v2
         with:
           path: |
@@ -77,7 +77,7 @@ jobs:
       matrix:
         node-version: [12.x, 14.x, 16.x, 17.x ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build on Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3.0.0
         with:
@@ -100,7 +100,7 @@ jobs:
       matrix:
         node-version: [12.x, 14.x, 16.x, 17.x ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Node ${{ matrix.node-version }}
         uses: actions/setup-node@v3.0.0
         with:
@@ -125,7 +125,7 @@ jobs:
     needs:
       - test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
       - uses: actions/setup-node@v3.0.0
