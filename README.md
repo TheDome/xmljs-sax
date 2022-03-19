@@ -1,9 +1,9 @@
 # XML-Sax
 
 [![codecov](https://codecov.io/gh/TheDome/xmljs-sax/branch/develop/graph/badge.svg?token=BIEQR9H432)](https://codecov.io/gh/TheDome/xmljs-sax)
-![npm](https://img.shields.io/npm/v/saxxmlparser?color=red&label=version)
-![npm](https://img.shields.io/npm/dt/saxxmlparser)
-![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/thedome/xmljs-sax/latest)
+[![npm](https://img.shields.io/npm/v/saxxmlparser?color=red&label=version)](https://www.npmjs.com/package/saxxmlparser)
+[![npm](https://img.shields.io/npm/dt/saxxmlparser)](https://www.npmjs.com/package/saxxmlparser)
+[![GitHub commits since latest release (by SemVer)](https://img.shields.io/github/commits-since/thedome/xmljs-sax/latest)](https://github.com/TheDome/xmljs-sax/compare/master...develop)
 
 A small package to transverse xml into javascript
 
