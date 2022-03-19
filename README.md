@@ -13,7 +13,7 @@ A small package to transverse xml into javascript
 
 ```typescript
 import { readFileSync } from "fs";
-import parse from "./lib/index";
+import parse from "saxxmlparser";
 
 var xml = readFileSync("xml.xml");
 
@@ -52,7 +52,7 @@ soap:encodingStyle="http://www.w3.org/2001/12/soap-encoding">
 
 ```typescript
 import { readFileSync } from "fs";
-import parse from "./lib/index";
+import parse from "saxxmlparser";
 
 var xml = readFileSync("xml.xml");
 
@@ -74,7 +74,7 @@ Sometimes when you only want a specific child but the parents or the path does n
 
 ```typescript
 import { readFileSync } from "fs";
-import parse from "./lib/index";
+import parse from "saxxmlparser";
 
 var xml = readFileSync("xml.xml");
 
@@ -97,7 +97,7 @@ Sometimes when you only want a specific child but the parents or the path does n
 
 ```typescript
 import { readFileSync } from "fs";
-import parse from "./lib/index";
+import parse from "saxxmlparser";
 
 var xml = readFileSync("xml.xml");
 
