@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - develop
+  schedule:
+    - cron: "0 0 * * *"
 
 concurrency:
   cancel-in-progress: true

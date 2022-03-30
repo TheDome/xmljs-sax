@@ -6,8 +6,6 @@ on:
       - master
       - develop
   pull_request:
-  schedule:
-    - cron: "0 0 * * *"
       
 concurrency:
   cancel-in-progress: true
