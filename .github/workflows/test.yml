@@ -115,7 +115,7 @@ jobs:
       - run: npm test -- --coverage
         env:
           CI: true
-      - uses: codecov/codecov-action@v2
+      - uses: codecov/codecov-action@v3
         
   semantic-release:
     runs-on: ubuntu-latest
