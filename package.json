@@ -29,7 +29,7 @@
     "@types/debug": "4.1.7",
     "@types/jest": "27.5.0",
     "@types/sax": "1.2.4",
-    "@typescript-eslint/eslint-plugin": "5.27.0",
+    "@typescript-eslint/eslint-plugin": "5.27.1",
     "@typescript-eslint/parser": "5.27.1",
     "eslint": "8.17.0",
     "eslint-config-prettier": "8.5.0",
