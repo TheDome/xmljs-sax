@@ -58,7 +58,7 @@ jobs:
           git-pr-release --no-fetch --squashed
         env:
           GIT_PR_RELEASE_BRANCH_PRODUCTION: master
-          GIT_PR_RELEASE_BRANCH_STAGING: ${{ github.event.repository.default_branch }}
+          GIT_PR_RELEASE_BRANCH_STAGING: ${{ github.event.repository.default_branch || 'develop'}}
           GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_PR_RELEASE_LABELS: release
           GIT_PR_RELEASE_MENTION: author
